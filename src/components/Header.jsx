@@ -27,6 +27,10 @@ const Header = ({ department, numberOfEmployees, manager }) => {
   };
 
   const handleAddEmployee = () => {
+    if (!employeeData.name || !employeeData.designation || !employeeData.branch) {
+        alert('Please fill in all the required fields.');
+        return;
+      }
     const newEmployeeId = department.employeeDetails.length > 0 ? department.employeeDetails[department.employeeDetails.length - 1].id + 1 : 1;
     const newEmployee = { id: newEmployeeId, ...employeeData };
 
