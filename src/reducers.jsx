@@ -44,10 +44,10 @@ const departmentsReducer = (state = initialState.departments, action) => {
 };
 
 const updateEmployeeIds = (employees) => {
-    return employees.map((employee, index) => ({
-      ...employee,
-      id: index + 1
-    }));
+  return employees.map((employee, index) => ({
+    ...employee,
+    id: index + 1
+  }));
 };
 
 const selectedDepartmentReducer = (state = initialState.selectedDepartmentIndex, action) => {
