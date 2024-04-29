@@ -1,22 +1,19 @@
 import React from 'react';
 import { Button, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteEmployee } from '../actions'; 
+import { deleteEmployee } from '../actions';
 
 const EmployeeDetails = ({ employees }) => {
   const dispatch = useDispatch();
   const departments = useSelector(state => state.departments);
+  const selectedDepartmentIndex = useSelector(state => state.selectedDepartmentIndex);
 
   const handleDeleteEmployee = (employeeId) => {
-    const departmentIndex = departments.findIndex(department =>
-      department.employeeDetails.some(employee => employee.id === employeeId)
-    );
-    const employeeIndex = departments[departmentIndex].employeeDetails.findIndex(employee =>
-      employee.id === employeeId
-    );
-  
-    dispatch(deleteEmployee(departmentIndex, employeeIndex));
-  
+    const department = departments[selectedDepartmentIndex];
+    const employeeIndex = department.employeeDetails.findIndex(employee => employee.id === employeeId);
+    if (employeeIndex !== -1) {
+      dispatch(deleteEmployee(selectedDepartmentIndex, employeeIndex));
+    }
   };
 
   return (

@@ -12,11 +12,11 @@ export const addEmployee = (departmentIndex, newEmployee) => ({
 });
   
 export const deleteEmployee = (departmentIndex, employeeIndex) => ({
-    type: 'DELETE_EMPLOYEE',
-    payload: {
-      departmentIndex,
-      employeeIndex
-    }
+  type: 'DELETE_EMPLOYEE',
+  payload: {
+    departmentIndex,
+    employeeIndex
+  }
 });
   
 export const setSelectedDepartment = (index) => ({
@@ -24,3 +24,10 @@ export const setSelectedDepartment = (index) => ({
     payload: index
 });
   
+export const addDepartment = (departmentName, managerName) => ({
+    type: 'ADD_DEPARTMENT',
+    payload: {
+        departmentName,
+        managerName
+    }
+});

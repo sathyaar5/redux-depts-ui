@@ -38,16 +38,26 @@ const departmentsReducer = (state = initialState.departments, action) => {
         }
         return department;
       });
+      case 'ADD_DEPARTMENT':
+      return [
+        ...state,
+        {
+          deptName: action.payload.departmentName,
+          manager: action.payload.managerName,
+          employeeDetails: []
+        }
+      ];
+    
     default:
       return state;
   }
 };
 
 const updateEmployeeIds = (employees) => {
-  return employees.map((employee, index) => ({
-    ...employee,
-    id: index + 1
-  }));
+    return employees.map((employee, index) => ({
+      ...employee,
+      id: index + 1
+    }));
 };
 
 const selectedDepartmentReducer = (state = initialState.selectedDepartmentIndex, action) => {
