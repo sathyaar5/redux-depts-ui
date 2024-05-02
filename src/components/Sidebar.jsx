@@ -31,7 +31,6 @@ const Sidebar = ({ departments }) => {
     setErrors({});
     dispatch(addDepartment(departmentName, managerName));
 
-    // Reset form state
     setShowAddDepartmentForm(false);
     setDepartmentName('');
     setManagerName('');

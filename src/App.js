@@ -1,17 +1,17 @@
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DepartmentList from './components/DepartmentList';
-import { Provider } from 'react-redux';
-import store from './store';
-import './styles.css';
+import DepartmentDetails from './components/DepartmentDetails';
 
-function App() {
+const App = () => {
   return (
-    <Provider store={store}>
-      <div className="App">
-        <DepartmentList />
-      </div>
-    </Provider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<DepartmentList />} />
+        <Route path="/:deptName" element={<DepartmentDetails />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
