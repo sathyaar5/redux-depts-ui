@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid } from '@mui/material';
-import { setDepartments, setSelectedDepartment, addDepartment } from '../actions';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import EmployeeDetails from '../components/EmployeeDetails';
+import { Container, Grid } from '@mui/material';
+import { setDepartments, setSelectedDepartment } from '../actions';
 
 const employeesData = [
     {
@@ -69,20 +69,19 @@ const employeesData = [
 ];
 
 const DepartmentList = () => {
-  const [departments, setDepartmentsLocal] = useState([]);
+  const departments = useSelector((state) => state.departments);
   const selectedDepartmentIndex = useSelector((state) => state.selectedDepartmentIndex);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Replace useHistory with useNavigate
 
   useEffect(() => {
-    setDepartmentsLocal(useSelector((state) => state.departments));
-  }, []);
+    dispatch(setDepartments(employeesData));
+  }, [dispatch]); 
 
-  const handleDepartmentClick = (deptName) => {
-    dispatch(setSelectedDepartment(departments.findIndex(department => department.deptName === deptName)));
-    navigate(`/${deptName.toLowerCase().replace(' ', '-')}`); // Use navigate instead of history.push
+
+  const handleDepartmentClick = (index) => {
+    dispatch(setSelectedDepartment(index));
   };
-
+  
   const selectedDepartment = departments[selectedDepartmentIndex];
   const numberOfEmployees = selectedDepartment ? selectedDepartment.employeeDetails.length : 0;
 

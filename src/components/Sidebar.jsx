@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { List, ListItem, ListItemText, Typography, Button, TextField, Grid } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { setSelectedDepartment, addDepartment } from '../actions';
+import { Link } from 'react-router-dom'; // Import Link
 
 const Sidebar = ({ departments }) => {
   const dispatch = useDispatch();
@@ -42,7 +43,9 @@ const Sidebar = ({ departments }) => {
       <List>
         {departments.map((department, index) => (
           <ListItem key={index} button onClick={() => handleDepartmentClick(index)} className="department-item">
-            <ListItemText primary={department.deptName} />
+            <Link to={`/${department.deptName.toLowerCase().replace(/\s+/g, '-')}`}>
+              <ListItemText primary={department.deptName} />
+            </Link>
           </ListItem>
         ))}
       </List>
@@ -79,4 +82,4 @@ const Sidebar = ({ departments }) => {
   );
 };
 
-export default Sidebar;
+export default Sidebar;	

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header from './Header';
@@ -7,22 +7,41 @@ import EmployeeDetails from './EmployeeDetails';
 const DepartmentDetails = () => {
   const { deptName } = useParams();
   const departments = useSelector(state => state.departments);
-  const selectedDepartment = departments.find(department => department.deptName.toLowerCase().replace(' ', '-') === deptName);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+
+  useEffect(() => {
+    const storedDepartment = JSON.parse(localStorage.getItem('selectedDepartment'));
+    if (storedDepartment && storedDepartment.deptName.toLowerCase().replace(/\s+/g, '-') === deptName.toLowerCase()) {
+      setSelectedDepartment(storedDepartment);
+    } else {
+      const matchedDepartment = departments.find(
+        department => department.deptName.toLowerCase().replace(/\s+/g, '-') === deptName.toLowerCase()
+      );
+      if (matchedDepartment) {
+        setSelectedDepartment(matchedDepartment);
+        localStorage.setItem('selectedDepartment', JSON.stringify(matchedDepartment));
+      } else {
+        setSelectedDepartment(null);
+        localStorage.removeItem('selectedDepartment');
+      }
+    }
+  }, [deptName, departments]);
 
   if (!selectedDepartment) {
-    return <div>Department not found</div>;
+    return;
   }
 
-  const numberOfEmployees = selectedDepartment.employeeDetails.length;
+  const { employeeDetails, manager } = selectedDepartment;
+  const numberOfEmployees = employeeDetails.length;
 
   return (
     <div>
       <Header
         department={selectedDepartment}
         numberOfEmployees={numberOfEmployees}
-        manager={selectedDepartment.manager}
+        manager={manager}
       />
-      <EmployeeDetails employees={selectedDepartment.employeeDetails} />
+      <EmployeeDetails employees={employeeDetails} />
     </div>
   );
 };

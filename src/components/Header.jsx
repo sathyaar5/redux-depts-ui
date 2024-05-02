@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Typography, Button, Modal, TextField } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux'; // Import useSelector
+import { useDispatch, useSelector } from 'react-redux';
 import { addEmployee } from '../actions';
 
 const FIELD_NAMES = [
-  { fieldName: 'name', buttonName: 'Name' },
-  { fieldName: 'designation', buttonName: 'Designation' },
-  { fieldName: 'branch', buttonName: 'Branch' }
+  { fieldName: 'name', label: 'Name' },
+  { fieldName: 'designation', label: 'Designation' },
+  { fieldName: 'branch', label: 'Branch' }
 ];
 
 const Header = ({ department, numberOfEmployees, manager }) => {
@@ -17,7 +17,7 @@ const Header = ({ department, numberOfEmployees, manager }) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    setEmployeeData({}); // Reset the employeeData state to clear the form fields
+    setEmployeeData({});
     setOpen(false); 
   };
 
@@ -28,9 +28,10 @@ const Header = ({ department, numberOfEmployees, manager }) => {
 
   const handleAddEmployee = () => {
     if (!employeeData.name || !employeeData.designation || !employeeData.branch) {
-        alert('Please fill in all the required fields.');
-        return;
-      }
+      alert('Please fill in all the required fields.');
+      return;
+    }
+
     const newEmployeeId = department.employeeDetails.length > 0 ? department.employeeDetails[department.employeeDetails.length - 1].id + 1 : 1;
     const newEmployee = { id: newEmployeeId, ...employeeData };
 
@@ -48,8 +49,8 @@ const Header = ({ department, numberOfEmployees, manager }) => {
       <Modal open={open} onClose={handleClose}>
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px' }}>
           <Typography variant="h6">Add Employee</Typography>
-          {FIELD_NAMES.map(({ fieldName, buttonName }) => (
-            <TextField key={fieldName} name={fieldName} label={buttonName} value={employeeData[fieldName] || ''} onChange={handleInputChange} />
+          {FIELD_NAMES.map(({ fieldName, label }) => (
+            <TextField key={fieldName} name={fieldName} label={label} value={employeeData[fieldName] || ''} onChange={handleInputChange} />
           ))}
           <Button variant="contained" onClick={handleAddEmployee}>Save</Button>
         </div>
