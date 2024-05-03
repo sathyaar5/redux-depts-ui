@@ -1,10 +1,13 @@
+// Sidebar.js
+
 import React, { useState } from 'react';
 import { List, ListItem, ListItemText, Typography, Button, TextField, Grid } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedDepartment, addDepartment } from '../actions';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 
-const Sidebar = ({ departments }) => {
+const Sidebar = () => {
+  const departments = useSelector((state) => state.departments);
   const dispatch = useDispatch();
   const [showAddDepartmentForm, setShowAddDepartmentForm] = useState(false);
   const [departmentName, setDepartmentName] = useState('');
@@ -38,10 +41,10 @@ const Sidebar = ({ departments }) => {
   };
 
   return (
-    <div className="sidebar">
+    <div>
       <Typography variant="h5" gutterBottom>Departments</Typography>
       <List>
-        {departments.map((department, index) => (
+        {departments && departments.map((department, index) => (
           <ListItem key={index} button onClick={() => handleDepartmentClick(index)} className="department-item">
             <Link to={`/${department.deptName.toLowerCase().replace(/\s+/g, '-')}`}>
               <ListItemText primary={department.deptName} />
@@ -72,7 +75,7 @@ const Sidebar = ({ departments }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" onClick={handleSubmit}>Add </Button>
+            <Button variant="contained" onClick={handleSubmit}>Add</Button>
           </Grid>
         </Grid>
       ) : (
@@ -82,4 +85,4 @@ const Sidebar = ({ departments }) => {
   );
 };
 
-export default Sidebar;	
+export default Sidebar;

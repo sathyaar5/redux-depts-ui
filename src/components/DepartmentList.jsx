@@ -1,11 +1,11 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Sidebar from '../components/Sidebar';
+// import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import EmployeeDetails from '../components/EmployeeDetails';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Typography, List, ListItem, ListItemText } from '@mui/material';
 import { setDepartments, setSelectedDepartment } from '../actions';
+import { Link } from 'react-router-dom';
 
 const employeesData = [
     {
@@ -77,7 +77,6 @@ const DepartmentList = () => {
     dispatch(setDepartments(employeesData));
   }, [dispatch]); 
 
-
   const handleDepartmentClick = (index) => {
     dispatch(setSelectedDepartment(index));
   };
@@ -87,10 +86,10 @@ const DepartmentList = () => {
 
   return (
     <Container>
-      <Grid container spacing={3}>
-        <Grid item xs={3}>
+      {/* <Grid container spacing={3}> */}
+        {/* <Grid item xs={3}>
           <Sidebar departments={departments} handleDepartmentClick={handleDepartmentClick} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={9}>
           {selectedDepartment && (
             <>
@@ -103,7 +102,19 @@ const DepartmentList = () => {
             </>
           )}
         </Grid>
-      </Grid>
+        {/* <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom>Departments</Typography>
+          <List>
+            {departments.map((department, index) => (
+              <ListItem key={index} button onClick={() => handleDepartmentClick(index)} className="department-item">
+                <Link to={`/${department.deptName.toLowerCase().replace(/\s+/g, '-')}`}>
+                  <ListItemText primary={department.deptName} />
+                </Link>
+              </ListItem>
+            ))}
+          </List>
+        </Grid>
+      </Grid> */}
     </Container>
   );
 };
