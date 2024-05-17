@@ -1,23 +1,28 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
-import Sidebar from './components/Sidebar';
-import DepartmentList from './components/DepartmentList';
-import DepartmentDetails from './components/DepartmentDetails';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+import Sidebar from "./components/Sidebar";
+import DepartmentList from "./components/DepartmentList";
+import DepartmentDetails from "./components/DepartmentDetails";
 
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: "flex" }}>
           <Sidebar />
-          <div className="content" style={{ flex: 1 }}> 
+          <div className="content" style={{ flex: 1 }}>
             <Routes>
               <Route path="/" element={<DepartmentList />} />
-              <Route path="/:deptName" element={<>
-                <DepartmentDetails />
-              </>} />
+              <Route
+                path="/:deptName"
+                element={
+                  <>
+                    <DepartmentDetails />
+                  </>
+                }
+              />
             </Routes>
           </div>
         </div>

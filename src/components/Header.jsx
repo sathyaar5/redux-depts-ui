@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Button, Modal, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { addEmployee } from '../actions';
 
 const FIELD_NAMES = [
@@ -18,7 +19,7 @@ const Header = ({ department, numberOfEmployees, manager }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setEmployeeData({});
-    setOpen(false); 
+    setOpen(false);
   };
 
   const handleInputChange = (event) => {
@@ -39,7 +40,6 @@ const Header = ({ department, numberOfEmployees, manager }) => {
     handleClose();
   };
   
-
   return (
     <div className="department-details">
       <Typography variant="h4" gutterBottom>{department.deptName}</Typography>
@@ -50,7 +50,13 @@ const Header = ({ department, numberOfEmployees, manager }) => {
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px' }}>
           <Typography variant="h6">Add Employee</Typography>
           {FIELD_NAMES.map(({ fieldName, label }) => (
-            <TextField key={fieldName} name={fieldName} label={label} value={employeeData[fieldName] || ''} onChange={handleInputChange} />
+            <TextField
+              key={fieldName}
+              name={fieldName}
+              label={label}
+              value={employeeData[fieldName] || ""}
+              onChange={handleInputChange}
+            />
           ))}
           <Button variant="contained" onClick={handleAddEmployee}>Save</Button>
         </div>

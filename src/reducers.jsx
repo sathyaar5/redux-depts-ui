@@ -1,68 +1,80 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 const initialState = {
   departments: [],
-  selectedDepartmentIndex: null
+  selectedDepartmentIndex: null,
 };
 
 const departmentsReducer = (state = initialState.departments, action) => {
   switch (action.type) {
-    case 'SET_DEPARTMENTS':
+    case "SET_DEPARTMENTS":
       return action.payload;
-    case 'ADD_EMPLOYEE':
+    case "ADD_EMPLOYEE":
       return state.map((department, index) => {
         if (index === action.payload.departmentIndex) {
           const newEmployee = action.payload.newEmployee;
-          const updatedEmployeeDetails = [...department.employeeDetails, newEmployee];
-          const updatedEmployeeDetailsWithIDs = updateEmployeeIds(updatedEmployeeDetails);
+          const updatedEmployeeDetails = [
+            ...department.employeeDetails,
+            newEmployee,
+          ];
+          const updatedEmployeeDetailsWithIDs = updateEmployeeIds(
+            updatedEmployeeDetails,
+          );
           return {
             ...department,
-            employeeDetails: updatedEmployeeDetailsWithIDs
+            employeeDetails: updatedEmployeeDetailsWithIDs,
           };
         }
         return department;
       });
-      case 'DELETE_EMPLOYEE':
+    case "DELETE_EMPLOYEE":
       return state.map((department, index) => {
         if (index === action.payload.departmentIndex) {
-          const updatedEmployeeDetails = department.employeeDetails.filter((employee, i) => i !== action.payload.employeeIndex);
-          const updatedEmployeeDetailsWithIDs = updatedEmployeeDetails.map((employee, i) => ({
-            ...employee,
-            id: i + 1 // Update ID 
-          }));
+          const updatedEmployeeDetails = department.employeeDetails.filter(
+            (employee, i) => i !== action.payload.employeeIndex,
+          );
+          const updatedEmployeeDetailsWithIDs = updatedEmployeeDetails.map(
+            (employee, i) => ({
+              ...employee,
+              id: i + 1, // Update ID
+            }),
+          );
 
           return {
             ...department,
-            employeeDetails: updatedEmployeeDetailsWithIDs
+            employeeDetails: updatedEmployeeDetailsWithIDs,
           };
         }
         return department;
       });
-      case 'ADD_DEPARTMENT':
+    case "ADD_DEPARTMENT":
       return [
         ...state,
         {
           deptName: action.payload.departmentName,
           manager: action.payload.managerName,
-          employeeDetails: []
-        }
+          employeeDetails: [],
+        },
       ];
-    
+
     default:
       return state;
   }
 };
 
 const updateEmployeeIds = (employees) => {
-    return employees.map((employee, index) => ({
-      ...employee,
-      id: index + 1
-    }));
+  return employees.map((employee, index) => ({
+    ...employee,
+    id: index + 1,
+  }));
 };
 
-const selectedDepartmentReducer = (state = initialState.selectedDepartmentIndex, action) => {
+const selectedDepartmentReducer = (
+  state = initialState.selectedDepartmentIndex,
+  action,
+) => {
   switch (action.type) {
-    case 'SET_SELECTED_DEPARTMENT':
+    case "SET_SELECTED_DEPARTMENT":
       return action.payload;
     default:
       return state;
@@ -71,5 +83,5 @@ const selectedDepartmentReducer = (state = initialState.selectedDepartmentIndex,
 
 export default combineReducers({
   departments: departmentsReducer,
-  selectedDepartmentIndex: selectedDepartmentReducer
+  selectedDepartmentIndex: selectedDepartmentReducer,
 });

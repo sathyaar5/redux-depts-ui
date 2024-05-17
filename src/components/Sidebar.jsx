@@ -1,17 +1,24 @@
-// Sidebar.js
+import React, { useState } from "react";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  Button,
+  TextField,
+  Grid,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import React, { useState } from 'react';
-import { List, ListItem, ListItemText, Typography, Button, TextField, Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedDepartment, addDepartment } from '../actions';
-import { Link } from 'react-router-dom';
+import { setSelectedDepartment, addDepartment } from "../actions";
 
 const Sidebar = () => {
   const departments = useSelector((state) => state.departments);
   const dispatch = useDispatch();
   const [showAddDepartmentForm, setShowAddDepartmentForm] = useState(false);
-  const [departmentName, setDepartmentName] = useState('');
-  const [managerName, setManagerName] = useState('');
+  const [departmentName, setDepartmentName] = useState("");
+  const [managerName, setManagerName] = useState("");
   const [errors, setErrors] = useState({});
 
   const handleDepartmentClick = (index) => {
@@ -24,11 +31,11 @@ const Sidebar = () => {
 
   const handleSubmit = () => {
     if (!departmentName.trim()) {
-      setErrors({ departmentName: 'Department name is required' });
+      setErrors({ departmentName: "Department name is required" });
       return;
     }
     if (!managerName.trim()) {
-      setErrors({ managerName: 'Manager name is required' });
+      setErrors({ managerName: "Manager name is required" });
       return;
     }
 
@@ -36,21 +43,33 @@ const Sidebar = () => {
     dispatch(addDepartment(departmentName, managerName));
 
     setShowAddDepartmentForm(false);
-    setDepartmentName('');
-    setManagerName('');
+    setDepartmentName("");
+    setManagerName("");
   };
 
   return (
     <div>
-      <Typography variant="h5" gutterBottom>Departments</Typography>
+      <Typography variant="h5" gutterBottom>
+        Departments
+      </Typography>
       <List>
-        {departments && departments.map((department, index) => (
-          <ListItem key={index} button onClick={() => handleDepartmentClick(index)} className="department-item">
-            <Link to={`/${department.deptName.toLowerCase().replace(/\s+/g, '-')}`}>
-              <ListItemText primary={department.deptName} />
-            </Link>
-          </ListItem>
-        ))}
+        {departments &&
+          departments.map((department, index) => (
+            <ListItem
+              key={index}
+              button
+              onClick={() => handleDepartmentClick(index)}
+              className="department-item"
+            >
+              <Link
+                to={`/${department.deptName
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
+              >
+                <ListItemText primary={department.deptName} />
+              </Link>
+            </ListItem>
+          ))}
       </List>
       {showAddDepartmentForm ? (
         <Grid container spacing={2} alignItems="center">
@@ -75,11 +94,15 @@ const Sidebar = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" onClick={handleSubmit}>Add</Button>
+            <Button variant="contained" onClick={handleSubmit}>
+              Add
+            </Button>
           </Grid>
         </Grid>
       ) : (
-        <Button variant="contained" onClick={handleAddDepartment}>Add Department</Button>
+        <Button variant="contained" onClick={handleAddDepartment}>
+          Add Department
+        </Button>
       )}
     </div>
   );
