@@ -13,6 +13,7 @@ const FIELD_NAMES = [
 const Header = ({ department, numberOfEmployees, manager }) => {
   const [open, setOpen] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const selectedDepartmentIndex = useSelector(
     (state) => state.selectedDepartmentIndex,
@@ -21,6 +22,7 @@ const Header = ({ department, numberOfEmployees, manager }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setEmployeeData({});
+    setError("");
     setOpen(false);
   };
 
@@ -30,12 +32,8 @@ const Header = ({ department, numberOfEmployees, manager }) => {
   };
 
   const handleAddEmployee = () => {
-    if (
-      !employeeData.name ||
-      !employeeData.designation ||
-      !employeeData.branch
-    ) {
-      alert("Please fill in all the required fields.");
+    if (!employeeData.name || !employeeData.designation || !employeeData.branch) {
+      setError("Please fill in all the required fields.");
       return;
     }
 
@@ -83,8 +81,15 @@ const Header = ({ department, numberOfEmployees, manager }) => {
               label={label}
               value={employeeData[fieldName] || ""}
               onChange={handleInputChange}
+              fullWidth
+              margin="normal"
             />
           ))}
+          {error && (
+            <Typography color="error" variant="body2">
+              {error}
+            </Typography>
+          )}
           <Button variant="contained" onClick={handleAddEmployee}>
             Save
           </Button>

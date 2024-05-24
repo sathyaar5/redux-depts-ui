@@ -76,7 +76,8 @@ const Sidebar = () => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Department Name"
+              placeholder="Department Name"
+              data-testid="department-name-input"
               value={departmentName}
               onChange={(e) => setDepartmentName(e.target.value)}
               error={!!errors.departmentName}
@@ -86,7 +87,8 @@ const Sidebar = () => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Manager Name"
+              placeholder="Manager Name"
+              data-testid="manager-name-input"
               value={managerName}
               onChange={(e) => setManagerName(e.target.value)}
               error={!!errors.managerName}
