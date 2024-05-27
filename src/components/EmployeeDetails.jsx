@@ -54,7 +54,7 @@ const EmployeeDetails = ({ employees }) => {
                 Delete
               </Button>
             </TableCell>
-          </TableRow>
+          </TableRow>     
         ))}
       </TableBody>
     </Table>
